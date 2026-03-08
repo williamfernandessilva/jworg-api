@@ -41,3 +41,4 @@ C:\Users\willg\OneDrive\Área de Trabalho\jworg-api\obj\Debug\net7.0\refint\jwor
 C:\Users\willg\OneDrive\Área de Trabalho\jworg-api\obj\Debug\net7.0\jworg-api.pdb
 C:\Users\willg\OneDrive\Área de Trabalho\jworg-api\obj\Debug\net7.0\jworg-api.genruntimeconfig.cache
 C:\Users\willg\OneDrive\Área de Trabalho\jworg-api\obj\Debug\net7.0\ref\jworg-api.dll
+C:\Users\willg\OneDrive\Área de Trabalho\jworg-api\bin\Debug\net7.0\package-lock.json

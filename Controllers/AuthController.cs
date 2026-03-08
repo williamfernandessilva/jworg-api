@@ -19,8 +19,9 @@ namespace JworgApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Usuario login)
         {
-            // Procura o usuário no banco do XAMPP
-            var user = await _context.Usuarios
+            // Alterado de .Usuarios para .usuarios (minúsculo) 
+            // para bater com o seu AppDbContext atualizado
+            var user = await _context.usuarios
                 .FirstOrDefaultAsync(u => u.Email == login.Email && u.Senha == login.Senha);
 
             if (user == null)

@@ -7,7 +7,9 @@ namespace JworgApi.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Bairro> Bairros { get; set; }
+        public DbSet<Usuario> usuarios { get; set; }
+
+
+        public DbSet<Bairro> bairros { get; set; } 
     }
 }
