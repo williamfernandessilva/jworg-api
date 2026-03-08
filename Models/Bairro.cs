@@ -7,5 +7,7 @@ namespace JworgApi.Models
         public string? Status { get; set; } // "verde", "amarelo", "vermelho"
         public double Lat { get; set; }
         public double Lng { get; set; }
+        public string? TrabalhadoPor { get; set; }
+        public DateTime? DataConclusao { get; set; }
     }
 }
