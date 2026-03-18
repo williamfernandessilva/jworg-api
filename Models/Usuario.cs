@@ -17,7 +17,7 @@ namespace JworgApi.Models
         [Column("senha")]
         public string Senha { get; set; } = string.Empty;
         
-        [Column("IsAdmin")] // Se no seu Railway estiver 'is_admin', mude aqui para "is_admin"
+        [Column("isAdmin")] // Se no seu Railway estiver 'is_admin', mude aqui para "is_admin"
         public bool IsAdmin { get; set; }
     }
 }
