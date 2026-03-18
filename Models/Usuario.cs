@@ -2,11 +2,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JworgApi.Models
 {
-    [Table("usuarios")] // Força o C# a procurar a tabela 'usuarios' em minúsculo
+    [Table("usuarios")] 
     public class Usuario
     {
         [Column("id")]
-public string Id { get; set; }
+        public string Id { get; set; } = string.Empty; // DEIXE APENAS ESTE ID
 
         [Column("nome")]
         public string Nome { get; set; } = string.Empty;
@@ -17,7 +17,7 @@ public string Id { get; set; }
         [Column("senha")]
         public string Senha { get; set; } = string.Empty;
         
-       [Column("id")]
-public string Id { get; set; } = string.Empty;
+        [Column("isAdmin")] 
+        public bool IsAdmin { get; set; }
     }
 }
