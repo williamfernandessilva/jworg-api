@@ -25,11 +25,10 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // 2. CONFIGURAÇÕES DO PIPELINE
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 // IMPORTANTE: Use o mesmo nome que definiu lá em cima ("AllowReact")
 // E chame apenas UMA vez antes do Authorization
