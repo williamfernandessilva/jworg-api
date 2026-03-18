@@ -19,8 +19,7 @@ namespace JworgApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Usuario login)
         {
-            // Alterado de .Usuarios para .usuarios (minúsculo) 
-            // para bater com o seu AppDbContext atualizado
+            // Busca o usuário no banco (tabela 'usuarios' em minúsculo conforme seu DbContext)
             var user = await _context.usuarios
                 .FirstOrDefaultAsync(u => u.Email == login.Email && u.Senha == login.Senha);
 
@@ -29,7 +28,12 @@ namespace JworgApi.Controllers
                 return Unauthorized(new { message = "E-mail ou senha incorretos!" });
             }
 
-            return Ok(new { message = "Login realizado com sucesso!", nome = user.Nome });
-        }
-    }
-}
+            // Retorna os dados para o React salvar no localStorage
+            return Ok(new { 
+                nome = user.Nome, 
+                email = user.Email,
+                isAdmin = user.IsAdmin 
+            });
+        } // Fechamento do Método Login
+    } // Fechamento da Classe AuthController
+} // Fechamento do Namespace

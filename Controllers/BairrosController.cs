@@ -22,7 +22,34 @@ namespace JworgApi.Controllers
             return await _context.bairros.ToListAsync();
         }
 
-        // MÉTODO RESERVAR (Verde -> Amarelo)
+        // NOVO MÉTODO: CADASTRAR (Apenas Admin usará no Front)
+        [HttpPost]
+        public async Task<ActionResult<Bairro>> PostBairro(Bairro bairro)
+        {
+            // Garante que o bairro novo sempre comece como disponível
+            bairro.Status = "verde"; 
+            bairro.TrabalhadoPor = null;
+            bairro.DataConclusao = null;
+
+            _context.bairros.Add(bairro);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetBairros), new { id = bairro.Id }, bairro);
+        }
+
+        // NOVO MÉTODO: EXCLUIR PIN (Caso cadastre algo errado)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBairro(int id)
+        {
+            var bairro = await _context.bairros.FindAsync(id);
+            if (bairro == null) return NotFound();
+
+            _context.bairros.Remove(bairro);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Pin removido com sucesso!" });
+        }
+
         [HttpPut("Reservar/{id}")]
         public async Task<IActionResult> Reservar(int id, [FromBody] string nomeUsuario)
         {
@@ -39,34 +66,31 @@ namespace JworgApi.Controllers
             return BadRequest("Território indisponível.");
         }
 
-        // MÉTODO CONCLUIR (Amarelo -> Vermelho + DATA)
         [HttpPut("Concluir/{id}")]
-public async Task<IActionResult> Concluir(int id)
-{
-    var bairro = await _context.bairros.FindAsync(id);
-    if (bairro == null) return NotFound();
-
-    if (bairro.Status?.ToLower() == "amarelo")
-    {
-        bairro.Status = "vermelho";
-        bairro.DataConclusao = DateTime.Now; // Pega a data e hora atual
-
-        // Força o Entity Framework a entender que o bairro mudou
-        _context.Entry(bairro).State = EntityState.Modified;
-
-        try 
+        public async Task<IActionResult> Concluir(int id)
         {
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "Concluído com sucesso!", data = bairro.DataConclusao });
-        }
-        catch (Exception ex) 
-        {
-            // Se der erro no banco, aparecerá no seu terminal do VS Code
-            return BadRequest("Erro ao salvar no banco: " + ex.Message);
-        }
-    }
+            var bairro = await _context.bairros.FindAsync(id);
+            if (bairro == null) return NotFound();
 
-    return BadRequest("Apenas territórios em andamento podem ser concluídos.");
-}
+            if (bairro.Status?.ToLower() == "amarelo")
+            {
+                bairro.Status = "vermelho";
+                bairro.DataConclusao = DateTime.Now; 
+
+                _context.Entry(bairro).State = EntityState.Modified;
+
+                try 
+                {
+                    await _context.SaveChangesAsync();
+                    return Ok(new { message = "Concluído com sucesso!", data = bairro.DataConclusao });
+                }
+                catch (Exception ex) 
+                {
+                    return BadRequest("Erro ao salvar no banco: " + ex.Message);
+                }
+            }
+
+            return BadRequest("Apenas territórios em andamento podem ser concluídos.");
+        }
     }
 }
