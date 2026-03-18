@@ -18,4 +18,4 @@ COPY --from=build /app/out .
 EXPOSE 80
 
 # Comando para iniciar a sua API
-ENTRYPOINT ["dotnet", "jworg_api.dll"]
+ENTRYPOINT ["dotnet", "jworg-api.dll"]
