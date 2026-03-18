@@ -19,4 +19,4 @@ ENV ASPNETCORE_URLS=http://+:80
 EXPOSE 80
 
 # Comando para iniciar a sua API
-ENTRYPOINT ["dotnet", "JworgApi.dll"]
+ENTRYPOINT ["dotnet", "jworg-api.dll"]
