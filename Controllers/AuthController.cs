@@ -5,6 +5,13 @@ using JworgApi.Models;
 
 namespace JworgApi.Controllers
 {
+    // Modelo simples para evitar erro 400 de validação
+    public class LoginRequest
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Senha { get; set; } = string.Empty;
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -17,23 +24,22 @@ namespace JworgApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Usuario login)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            // Busca o usuário no banco (tabela 'usuarios' em minúsculo conforme seu DbContext)
+            // Agora usamos 'request.Email' e 'request.Senha'
             var user = await _context.usuarios
-                .FirstOrDefaultAsync(u => u.Email == login.Email && u.Senha == login.Senha);
+                .FirstOrDefaultAsync(u => u.Email == request.Email && u.Senha == request.Senha);
 
             if (user == null)
             {
                 return Unauthorized(new { message = "E-mail ou senha incorretos!" });
             }
 
-            // Retorna os dados para o React salvar no localStorage
             return Ok(new { 
                 nome = user.Nome, 
                 email = user.Email,
                 isAdmin = user.IsAdmin 
             });
-        } // Fechamento do Método Login
-    } // Fechamento da Classe AuthController
-} // Fechamento do Namespace
+        }
+    }
+}

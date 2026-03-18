@@ -17,7 +17,7 @@ public string Id { get; set; }
         [Column("senha")]
         public string Senha { get; set; } = string.Empty;
         
-        [Column("isAdmin")] // Se no seu Railway estiver 'is_admin', mude aqui para "is_admin"
-        public bool IsAdmin { get; set; }
+       [Column("id")]
+public string Id { get; set; } = string.Empty;
     }
 }
