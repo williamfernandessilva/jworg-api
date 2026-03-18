@@ -12,9 +12,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Configure o nome da política aqui
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowReact", policy => {
-        policy.WithOrigins("http://localhost:5173", "https://jworg-rosy.vercel.app") 
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.AllowAnyOrigin()   // Permite qualquer site (Vercel, Localhost, etc)
+              .AllowAnyMethod()   // Permite POST, GET, PUT, DELETE
+              .AllowAnyHeader();  // Permite Content-Type, Authorization, etc
     });
 });
 
