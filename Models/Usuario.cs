@@ -6,7 +6,7 @@ namespace JworgApi.Models
     public class Usuario
     {
         [Column("id")]
-        public int Id { get; set; }
+public string Id { get; set; }
 
         [Column("nome")]
         public string Nome { get; set; } = string.Empty;

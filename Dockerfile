@@ -15,7 +15,8 @@ WORKDIR /app
 COPY --from=build /app/out .
 
 # Expõe a porta 80 para o Render
+ENV ASPNETCORE_URLS=http://+:80
 EXPOSE 80
 
 # Comando para iniciar a sua API
-ENTRYPOINT ["dotnet", "jworg-api.dll"]
+ENTRYPOINT ["dotnet", "JworgApi.dll"]
