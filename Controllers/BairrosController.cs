@@ -16,11 +16,21 @@ namespace JworgApi.Controllers
             _context = context;
         }
 
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Bairro>>> GetBairros()
-        {
-            return await _context.bairros.ToListAsync();
-        }
+public async Task<IActionResult> GetBairros()
+{
+    try 
+    {
+        var lista = await _context.bairros.ToListAsync();
+        return Ok(lista);
+    }
+    catch (Exception ex)
+    {
+        // Isso vai aparecer no LOG do Render se der erro
+        return StatusCode(500, $"Erro no Banco: {ex.Message}");
+    }
+}
 
         // NOVO MÉTODO: CADASTRAR (Apenas Admin usará no Front)
         [HttpPost]

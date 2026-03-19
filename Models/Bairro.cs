@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JworgApi.Models
@@ -12,15 +11,15 @@ namespace JworgApi.Models
         [Column("nome")]
         public string Nome { get; set; } = string.Empty;
 
-        // Note que aqui usamos "lat" e "lng" para bater com sua imagem
-        [Column("lat")]
+        // Forçamos o tipo da coluna para decimal(18,10) ou double para não dar erro 500
+        [Column("lat", TypeName = "double")]
         public double Lat { get; set; }
 
-        [Column("lng")]
+        [Column("lng", TypeName = "double")]
         public double Lng { get; set; }
 
         [Column("status")]
-        public string? Status { get; set; }
+        public string? Status { get; set; } = "verde";
 
         [Column("trabalhadoPor")]
         public string? TrabalhadoPor { get; set; }
