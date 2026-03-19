@@ -32,8 +32,8 @@ var app = builder.Build();
 
 // IMPORTANTE: Use o mesmo nome que definiu lá em cima ("AllowReact")
 // E chame apenas UMA vez antes do Authorization
-app.UseCors("AllowReact");
-
+app.UseRouting(); 
+app.UseCors("AllowReact"); 
 app.UseAuthorization();
 app.MapControllers();
 

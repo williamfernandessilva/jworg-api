@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JworgApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bairros")]
     [ApiController]
     public class BairrosController : ControllerBase
     {
