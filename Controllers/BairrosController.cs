@@ -76,6 +76,25 @@ public async Task<IActionResult> Reservar(int id, [FromBody] string nomeUsuario)
         await _context.SaveChangesAsync();
         return Ok(new { message = $"Reservado para {nomeLimpo}" });
     }
+
+    [HttpPut("ResetMensal")]
+public async Task<IActionResult> ResetMensal()
+{
+    // Busca todos os bairros que estão concluídos (vermelhos)
+    var bairrosParaResetar = await _context.Bairros
+        .Where(b => b.Status.ToLower() == "vermelho")
+        .ToListAsync();
+
+    foreach (var bairro in bairrosParaResetar)
+    {
+        bairro.Status = "verde";
+        bairro.TrabalhadoPor = null;
+        bairro.DataConclusao = null; // Limpa a data se você tiver esse campo
+    }
+
+    await _context.SaveChangesAsync();
+    return Ok(new { message = "Todos os territórios foram reiniciados!" });
+}
     return BadRequest("Território indisponível.");
 }
 
