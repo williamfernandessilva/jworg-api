@@ -60,21 +60,24 @@ public async Task<IActionResult> GetBairros()
             return Ok(new { message = "Pin removido com sucesso!" });
         }
 
-        [HttpPut("Reservar/{id}")]
-        public async Task<IActionResult> Reservar(int id, [FromBody] string nomeUsuario)
-        {
-            var bairro = await _context.bairros.FindAsync(id);
-            if (bairro == null) return NotFound();
+       [HttpPut("Reservar/{id}")]
+public async Task<IActionResult> Reservar(int id, [FromBody] string nomeUsuario)
+{
+    var bairro = await _context.bairros.FindAsync(id);
+    if (bairro == null) return NotFound();
 
-            if (bairro.Status?.ToLower() == "verde")
-            {
-                bairro.Status = "amarelo";
-                bairro.TrabalhadoPor = nomeUsuario; 
-                await _context.SaveChangesAsync();
-                return Ok(new { message = $"Reservado para {nomeUsuario}" });
-            }
-            return BadRequest("Território indisponível.");
-        }
+    // Importante: Forçar a limpeza de aspas extras que o JSON possa enviar
+    string nomeLimpo = nomeUsuario.Replace("\"", "");
+
+    if (bairro.Status?.ToLower() == "verde")
+    {
+        bairro.Status = "amarelo";
+        bairro.TrabalhadoPor = nomeLimpo; 
+        await _context.SaveChangesAsync();
+        return Ok(new { message = $"Reservado para {nomeLimpo}" });
+    }
+    return BadRequest("Território indisponível.");
+}
 
         [HttpPut("Concluir/{id}")]
         public async Task<IActionResult> Concluir(int id)
